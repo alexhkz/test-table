@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Preloader from './Preloader/Preloader'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+	async componentDidMount() {
+		const response = await fetch(`http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}`)
+		const data = await response.json()
+		console.log(data)
+	}
+
+	render() {
+		return ( 
+			<div className = "container" >
+				App 
+				<Preloader />
+			</div>
+		);
+	}
 }
 
 export default App;
