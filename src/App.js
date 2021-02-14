@@ -17,7 +17,7 @@ class App extends Component {
 		const data = await response.json()  //return our data 
 			this.setState({
 				isLoading: false,
-				data 
+				data: _.orderBy(data, this.state.sortField, this.state.sort) 
 			})
 	}
 
@@ -40,7 +40,10 @@ class App extends Component {
 				{
 					this.state.isLoading 
 						? <Preloader />
-						: <Table data={this.state.data} onSort={this.onSort} />
+						: <Table data={this.state.data} 
+						onSort={this.onSort} 
+						sort={this.state.sort} 
+						sortColumn={this.state.sortColumn} />
 					}
 			</div>
 		);
