@@ -4,8 +4,8 @@
 	position: absolute;
 	top: 50%;
 	left: 50%;
- }
- .lds-dual-ring:after {
+}
+.lds-dual-ring:after {
 	content: " ";
 	display: block;
 	width: 46px;
@@ -15,12 +15,12 @@
 	border: 5px solid rgb(3, 253, 24);
 	border-color: rgb(3, 253, 99) transparent rgb(3, 253, 86) transparent;
 	animation: lds-dual-ring 1.2s linear infinite;
- }
- @keyframes lds-dual-ring {
+}
+@keyframes lds-dual-ring {
 	0% {
-	  transform: rotate(0deg);
+		transform: rotate(0deg);
 	}
 	100% {
-	  transform: rotate(360deg);
+		transform: rotate(360deg);
 	}
- }
+}

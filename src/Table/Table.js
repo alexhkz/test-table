@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Markup = (props) => ( // make our table
+const Table = (props) => ( // make our table
     <table className="table"> 
         <thead> 
             <tr>
@@ -25,4 +25,4 @@ const Markup = (props) => ( // make our table
     </table>
 )
 
-export default Markup;
+export default Table;

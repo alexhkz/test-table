@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Preloader from './Preloader/Preloader';
 import Table from './Table/Table';
-import _ from 'lodash';
+import _ from 'lodash'; // for sorting
 
 class App extends Component {
 
@@ -23,9 +23,9 @@ class App extends Component {
 
 	 onSort = sortColumn => {
     
-		const cloneData = this.state.data.concat();
+		const cloneData = this.state.data.concat(); // copy of our massive
 		const sortType = this.state.sort === 'asc' ? 'desc' : 'asc';
-		const orderedData = _.orderBy(cloneData, sortColumn, sortType);
+		const orderedData = _.orderBy(cloneData, sortColumn, sortType); // sort method (copy massive, sorted field, direction)
   
 		this.setState({
 		  data: orderedData,
