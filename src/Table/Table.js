@@ -18,7 +18,7 @@ const Table = (props) => ( // make our table
 		</thead>
 		<tbody>
 			{ props.data.map(item =>( // our data here
-					<tr key={item.id + item.phone}>
+					<tr key={item.id + item.phone} onClick={props.onRowSelect.bind(null, item)}>
 						<td>{item.id}</td>
 						<td>{item.firstName}</td>
 						<td>{item.lastName}</td>
