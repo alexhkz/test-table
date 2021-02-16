@@ -5,6 +5,7 @@ import _ from 'lodash'; // for sorting
 import DetailView from './DetailView/DetailView';
 import ModeSelector from './ModeSelector/ModeSelector';
 import ReactPaginate from 'react-paginate';
+import TableSearch from './TableSearch/TableSearch';
 
 class App extends Component {
 
@@ -15,7 +16,8 @@ class App extends Component {
 		sort: 'asc',
     	sortColumn: 'id',
 		row: null,
-		currentPage: 0
+		currentPage: 0,
+		search: ''
 	 }
 
 	async fetchData(url) {  // make response to server
@@ -51,11 +53,29 @@ class App extends Component {
 		  isLoading: true,
 		})
 		this.fetchData(url)
-	 }
+	}
 
-	 pageChangeHandler = ({selected}) => (
+	pageChangeHandler = ({selected}) => (
 		this.setState({currentPage: selected})
-	 )
+	)
+
+	searchHandler = search => {
+		this.setState({search, currentPage: 0})
+	 }
+  
+	 getFilteredData(){
+		const {data, search} = this.state
+  
+		if (!search) {
+		  return data
+		}
+  
+		return data.filter(item => {
+		  return item['firstName'].toLowerCase().includes(search.toLowerCase())
+			 || item['lastName'].toLowerCase().includes(search.toLowerCase())
+			 || item['email'].toLowerCase().includes(search.toLowerCase())
+		})
+	 }
 
 	render() {
 		const pageSize = 50;
@@ -66,19 +86,24 @@ class App extends Component {
 			  </div>
 			)
 		}
-		const displayData = _.chunk(this.state.data, pageSize)[this.state.currentPage] // lodash method _.chunk
+		const filteredData = this.getFilteredData()
+    	const pageCount = Math.ceil(filteredData.length / pageSize)
+    	const displayData = _.chunk(filteredData, pageSize)[this.state.currentPage]
 
 		return ( 
 			<div className = "container" >
 				{
 				this.state.isLoading 
 					? <Preloader />
-					: <Table 
-							data={displayData} 
-							onSort={this.onSort} 
-							sort={this.state.sort} 
-							sortColumn={this.state.sortColumn} 
-							onRowSelect={this.onRowSelect} />
+					: <React.Fragment>
+						<TableSearch onSearch={this.searchHandler} />
+						<Table 
+								data={displayData} 
+								onSort={this.onSort} 
+								sort={this.state.sort} 
+								sortColumn={this.state.sortColumn} 
+								onRowSelect={this.onRowSelect} />
+					</React.Fragment>
 				}
 				{
 				this.state.data.length > pageSize
@@ -87,7 +112,7 @@ class App extends Component {
 							nextLabel={'>'}
 							breakLabel={'...'}
 							breakClassName={'break-me'}
-							pageCount={20}
+							pageCount={pageCount}
 							marginPagesDisplayed={2}
 							pageRangeDisplayed={5}
 							onPageChange={this.pageChangeHandler}
